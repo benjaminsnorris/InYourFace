@@ -8,7 +8,7 @@
 
 #import "IFViewController.h"
 
-@interface IFViewController () <UIAlertViewDelegate>
+@interface IFViewController ()
 
 @end
 
@@ -17,19 +17,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [self displayAlert];
 }
 
 - (void)displayAlert {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"This is a title" message:@"Rate my app!" delegate:self cancelButtonTitle:@"Never Again!" otherButtonTitles:@"Hit Me!", nil];
-    [alertView show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Cool Title" message:@"Annoying alert" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Never Again!" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        // Dismiss the alert
+    }]];
+    
+//    [alertController addAction:[UIAlertAction actionWithTitle:@"Nah, not now." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        // Dismiss the alert
+//    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Hit me!" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        [self displayAlert];
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [self displayAlert];
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
